@@ -35,7 +35,12 @@ class StoreCharacterRequest extends FormRequest
                 'integer',
                 'min:1',
                 'max:100',
-            ]
+            ],
+            'user_id' => [
+                'required',
+                'integer',
+                'exists:users,id',
+            ],
         ];
     }
     public function messages(): array
