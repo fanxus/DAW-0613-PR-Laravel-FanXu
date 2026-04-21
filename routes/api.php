@@ -25,3 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/characters', [CharacterController::class, 'index']);
 Route::get('/characters/{character}', [CharacterController::class, 'show']);
+
+//Item
+
+//Inventory

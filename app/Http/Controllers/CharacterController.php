@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCharacterRequest;
+use App\Http\Requests\UpdateCharacterRequest;
 use App\Models\Character;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Auth;
 
 class CharacterController extends Controller
 {
@@ -29,15 +31,6 @@ class CharacterController extends Controller
             'character' => $character,
         ], 201);
 
-        // $data = $request->validated();
-
-        // $character = new Character($data);
-
-        // $character->user()->associate(Auth::user());
-
-        // $character->save();
-
-        // return response()->json($character, 201);
     }
 
     /**
@@ -51,9 +44,16 @@ class CharacterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCharacterRequest $request, string $id)
     {
-        //
+        $character = Character::findOrFail($id);
+
+        $character->update($request->validate());
+
+        return response()->json([
+            'message' => 'Character updated successfully',
+            'data' => $character
+        ]);
     }
 
     /**
@@ -61,6 +61,12 @@ class CharacterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $character = Character::findOrFail($id);
+
+        $character->delete();
+
+        return response()->json([
+            'message' => 'Character deleted successfully'
+        ]);
     }
 }
